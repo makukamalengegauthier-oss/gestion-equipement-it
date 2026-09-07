@@ -5,18 +5,28 @@ import warnings
 # Masquer les avertissements de dépréciation dans l'interface
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# Le reste de votre code commence ici...
-import streamlit as st
-
-# Masquer le logo GitHub, le menu Streamlit et le pied de page par défaut
+# Masquer le menu Streamlit, le pied de page, le badge Codespaces et "Manage app"
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    .viewerBadge_container__1QSob {visibility: hidden;}
+    .viewerBadge_container__1QSob, 
+    div[data-testid="stDecoration"], 
+    .stApp > header + div,
+    #manage-app {
+        display: none !important;
+    }
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+# Votre code de configuration de page (ajustez le titre et l'icône selon vos préférences)
+st.set_page_config(
+    page_title="Gestion des Équipements IT",
+    page_icon="💻",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 import streamlit as st
 import pandas as pd
 import datetime
