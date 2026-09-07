@@ -1242,7 +1242,9 @@ elif menu == "Rapport Général & Export PDF":
     add_table_to_pdf(pdf, "3. Réaffectations", df_reaff)
     add_table_to_pdf(pdf, "4. Désaffectations", df_desaf)
     
-    pdf_bytes = pdf.output(dest='S').encode('latin1')
+    pdf_bytes = pdf.output()
+if isinstance(pdf_bytes, str):
+    pdf_bytes = pdf_bytes.encode('latin1')
     
     # --- 6. EXPORTATION ET ENVOI PAR MESSAGERIE DIRECTE ---
     st.markdown("---")
