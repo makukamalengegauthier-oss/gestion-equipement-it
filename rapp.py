@@ -1,4 +1,12 @@
 import streamlit as st
+import pandas as pd
+import warnings
+
+# Masquer les avertissements de dépréciation dans l'interface
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# Le reste de votre code commence ici...
+import streamlit as st
 
 # Masquer le logo GitHub, le menu Streamlit et le pied de page par défaut
 hide_streamlit_style = """
@@ -500,7 +508,7 @@ elif menu == "Entrées Stock IT":
 
     df_e = get_data("SELECT * FROM entrees_stock")
     if not df_e.empty:
-        st.dataframe(df_e, use_container_width=True)
+        st.dataframe(df_e, width='stretch')
     else:
         st.info("Aucune entrée en stock pour le moment.")
 
@@ -670,7 +678,7 @@ elif menu == "Affectations":
     df_a = get_data("SELECT * FROM affectations")
     
     if not df_a.empty:
-        st.dataframe(df_a, use_container_width=True)
+        st.dataframe(df_a, width='stretch')
         
         # Bouton pour vider le tableau
         if st.button("🗑️ Vider le tableau des affectations", type="primary"):
@@ -700,7 +708,7 @@ elif menu == "Affectations":
             df_preuves = pd.DataFrame()
 
         if not df_preuves.empty:
-            st.dataframe(df_preuves, use_container_width=True)
+           st.dataframe(df_preuves, width='stretch')
             
             # Bouton pour vider le tableau des preuves de pertes
             if st.button("🗑️ Vider le registre des preuves de pertes", type="primary", key="btn_clear_preuves"):
