@@ -707,13 +707,13 @@ elif menu == "Affectations":
         except:
             df_preuves = pd.DataFrame()
 
-        if not df_preuves.empty:
-           st.dataframe(df_preuves, width='stretch')
-            
-            # Bouton pour vider le tableau des preuves de pertes
-            if st.button("🗑️ Vider le registre des preuves de pertes", type="primary", key="btn_clear_preuves"):
-                if "confirm_preuves_delete" not in st.session_state:
-                    st.session_state.confirm_preuves_delete = True
+    if not df_preuves.empty:
+        st.dataframe(df_preuves, width='stretch')
+    
+    # Bouton pour vider le tableau des preuves de pertes
+    if st.button("🗑️ Vider le registre des preuves de pertes", type="primary", key="btn_clear_preuves"):
+        if "confirm_preuves_delete" not in st.session_state:
+            st.session_state.confirm_preuves_delete = True
                 
             if st.session_state.get("confirm_preuves_delete", False):
                 st.warning("⚠️ Êtes-vous sûr de vouloir supprimer TOUTES les preuves de traçabilité ?")
@@ -934,7 +934,7 @@ elif menu == "Désaffectation":
     df_d = get_data("SELECT * FROM desaffectations")
     
     if not df_d.empty:
-        st.dataframe(df_d, use_container_width=True)
+        st.dataframe(df_d, width='stretch')
         
         # Bouton pour vider le tableau
         if st.button("🗑️ Vider le tableau des désaffectations", type="primary"):
