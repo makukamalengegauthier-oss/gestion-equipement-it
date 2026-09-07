@@ -1242,40 +1242,39 @@ elif menu == "Rapport Général & Export PDF":
     add_table_to_pdf(pdf, "3. Réaffectations", df_reaff)
     add_table_to_pdf(pdf, "4. Désaffectations", df_desaf)
     
-    pdf_output = pdf.output()
-pdf_bytes = pdf_output if isinstance(pdf_output, bytes) else pdf_output.encode('latin1')
-
-# --- 6. EXPORTATION ET ENVOI PAR MESSAGERIE DIRECTE ---
-st.markdown("---")
-st.markdown("### 📤 Exportation et Envoi Direct par Mail")
-
-col_m1, col_m2 = st.columns(2)
-with col_m1:
-    client_mail = st.selectbox("Choisir la messagerie", ["Gmail", "Outlook"])
-    email_expediteur = st.text_input("Adresse e-mail de l'expéditeur")
-with col_m2:
-    mot_de_passe_mail = st.text_input("Mot de passe (ou Mot de passe d'application)", type="password")
-    email_dest = st.text_input("Adresse e-mail du destinataire")
-
-col_b1, col_b2 = st.columns(2)
-
-with col_b1:
-    st.download_button(
-        label="📥 Télécharger le Rapport PDF",
-        data=pdf_bytes,
-        file_name=f"Rapport_Parc_IT_{datetime.date.today()}.pdf",
-        mime="application/pdf",
-        use_container_width=True
-    )
+    pdf_bytes = pdf.output()
+if isinstance(pdf_bytes, str):
+    pdf_bytes = pdf_bytes.encode('latin1')
     
-with col_b2:
-    if st.button("🚀 Envoyer le Rapport par E-mail", use_container_width=True):
-        if email_expediteur and email_dest and mot_de_passe_mail:
-            try:
-                smtp_server = "smtp.gmail.com" if client_mail == "Gmail" else "smtp.office365.com"
-                smtp_port = 465
-            except Exception as e:
-                st.error(fErreur : {e})
+    # --- 6. EXPORTATION ET ENVOI PAR MESSAGERIE DIRECTE ---
+    st.markdown("---")
+    st.markdown("### 📤 Exportation et Envoi Direct par Mail")
+    
+    col_m1, col_m2 = st.columns(2)
+    with col_m1:
+        client_mail = st.selectbox("Choisir la messagerie", ["Gmail", "Outlook"])
+        email_expediteur = st.text_input("Adresse e-mail de l'expéditeur")
+    with col_m2:
+        mot_de_passe_mail = st.text_input("Mot de passe (ou Mot de passe d'application)", type="password")
+        email_dest = st.text_input("Adresse e-mail du destinataire")
+    
+    col_b1, col_b2 = st.columns(2)
+    
+    with col_b1:
+        st.download_button(
+            label="📥 Télécharger le Rapport PDF",
+            data=pdf_bytes,
+            file_name=f"Rapport_Parc_IT_{datetime.date.today()}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+        
+    with col_b2:
+        if st.button("🚀 Envoyer le Rapport par E-mail", use_container_width=True):
+            if email_expediteur and email_dest and mot_de_passe_mail:
+                try:
+                    smtp_server = "smtp.gmail.com" if client_mail == "Gmail" else "smtp.office365.com"
+                    smtp_port = 465
 
                     msg = MIMEMultipart()
                     msg['From'] = email_expediteur
